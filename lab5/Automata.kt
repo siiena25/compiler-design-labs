@@ -1,4 +1,4 @@
-package lab5_denis
+package laba5
 
 import java.util.*
 
@@ -50,24 +50,26 @@ internal class Automata(private var program: String, private val table: Array<In
             15 -> DomainTag.PRECOMMENT1
             16 -> DomainTag.PRECOMMENT2
             17 -> DomainTag.PRECOMMENT3
-            18 -> DomainTag.COMMENT
-            19 -> DomainTag.WHITESPACE
+            18 -> DomainTag.PRECOMMENT4
+            19 -> DomainTag.PRECOMMENT5
+            20 -> DomainTag.COMMENT
+            21 -> DomainTag.WHITESPACE
             else -> DomainTag.ERROR
         }
     }
 
     fun nextToken(): Token? {
-        return if (pos.cp == -1) {
+        return if (pos.currentPos == -1) {
             val posCopy = pos.copy()
             Token(DomainTag.EOF, "", "", posCopy, posCopy)
         } else {
-            while (-1 != pos.cp) {
+            while (-1 != pos.currentPos) {
                 val word = StringBuilder()
                 val parse = StringBuilder()
                 state = 0
                 var finalState = false
                 val start = pos.copy()
-                while (-1 != pos.cp) {
+                while (-1 != pos.currentPos) {
                     val currChar = program[pos.index]
                     val jumpCode = getCode(currChar)
                     if (-1 == jumpCode) {
@@ -103,7 +105,7 @@ internal class Automata(private var program: String, private val table: Array<In
                         pos
                     )
                 }
-                if (pos.cp == -1) {
+                if (pos.currentPos == -1) {
                     parse.append("(-1)\n")
                     if (getStateName(state) != DomainTag.PRECOMMENT1
                         && getStateName(state) != DomainTag.PRECOMMENT2

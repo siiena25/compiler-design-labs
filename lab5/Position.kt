@@ -1,26 +1,20 @@
-package lab5_denis
-
+package laba5
 
 class Position internal constructor(private val text: String) : Comparable<Position?> {
     var line: Int
     var pos = 1
     var index: Int
-    val cp: Int
-        get() = if (index == text.length) -1 else Character.codePointAt(text.toCharArray(), index)
+    val currentPos: Int
+        get() = if (index == text.length) {
+            -1
+        } else {
+            Character.codePointAt(text.toCharArray(), index)
+        }
 
     init {
         line = pos
         index = 0
     }
-
-    val isWhiteSpace: Boolean
-        get() = index != text.length && Character.isWhitespace(this.cp)
-
-    val isLetter: Boolean
-        get() = index != text.length && Character.isLetter(this.cp)
-
-    val isLetterOrDigit: Boolean
-        get() = index != text.length && Character.isLetterOrDigit(this.cp)
 
     private val isNewLine: Boolean
         get() = if (index == text.length) {
