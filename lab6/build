@@ -1,0 +1,5 @@
+lex main.lex
+cc lex.yy.c -lfl
+./a.out
+
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./main1.l exampleParam1
